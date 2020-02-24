@@ -1,40 +1,74 @@
-﻿<form action="@Url.Action("Cadastra")" method="post">
+﻿@model LojaRazor.Models.Usuario
+@using (Html.BeginForm("Cadastra", "Usuarios", FormMethod.Post))
+{
+
     <fieldset>
         <legend>Dados Pessoais</legend>
+        @Html.LabelFor(usuario => usuario.Nome, "Nome:")
+        @Html.TextBoxFor(usuario => usuario.Nome)
+        @Html.ValidationMessageFor(usuario => usuario.Nome)
 
-        <label for="nome">Nome: </label>
-        <input id="nome" type="text" name="usuario.Nome" />
+        <div class="control-group">
+            @Html.LabelFor(usuario => usuario.Sexo, "Sexo:")
+            <label class="inline radio">
+                @Html.RadioButtonFor(usuario => usuario.Sexo, LojaRazor.Models.Sexo.Masculino) Masculino
+            </label>
 
-        <label for="email">E-mail: </label>
-        <input id="email" type="text" name="usuario.Email" />
+            <label class="inline radio">
+                @Html.RadioButtonFor(usuario => usuario.Sexo, LojaRazor.Models.Sexo.Feminino) Feminino
+            </label>
+        </div>
 
-        <label for="senha">Senha:</label>
-        <input id="senha" type="password" name="usuario.Senha" />
+        @Html.LabelFor(usuario => usuario.Estado)
+        @Html.DropDownListFor(usuario => usuario.Estado, new SelectList(Enum.GetValues(typeof(LojaRazor.Models.Estado))))
 
-        <label for="dataDeNascimento">Data de Nascimento: </label>
-        <input id="dataDeNascimento" type="text" name="usuario.DataDeNascimento" />
+        @Html.LabelFor(usuario => usuario.Email, "Email:")
+        @Html.TextBoxFor(usuario => usuario.Email)
+        @Html.ValidationMessageFor(usuario => usuario.Email)
+
+        @Html.LabelFor(usuario => usuario.DataDeNascimento, "Data de Nascimento:")
+        @Html.TextBoxFor(usuario => usuario.DataDeNascimento)
+        @Html.ValidationMessageFor(usuario => usuario.DataDeNascimento)
+
+        @Html.LabelFor(usuario => usuario.Senha, "Senha:")
+        @Html.PasswordFor(usuario => usuario.Senha)
+        @Html.ValidationMessageFor(usuario => usuario.Senha)
+
     </fieldset>
-
     <fieldset>
         <legend>Dados de Entrega</legend>
+        @Html.LabelFor(usuario => usuario.Endereco, "Endereço:")
+        @Html.TextBoxFor(usuario => usuario.Endereco)
+        @Html.ValidationMessageFor(usuario => usuario.Endereco)
 
-        <label for="endereco">Endereço: </label>
-        <input id="endereco" type="text" name="usuario.Endereco" />
+        @Html.LabelFor(usuario => usuario.Complemento, "Complemento")
+        @Html.TextBoxFor(usuario => usuario.Complemento)
+        @Html.ValidationMessageFor(usuario => usuario.Complemento)
 
-        <label for="complemento">Complemento: </label>
-        <input id="complemento" type="text" name="usuario.Complemento" />
+        @Html.LabelFor(usuario => usuario.CEP, "CEP:")
+        @Html.TextBoxFor(usuario => usuario.CEP)
+        @Html.ValidationMessageFor(usuario => usuario.CEP)
 
-        <label for="cep">CEP: </label>
-        <input id="cep" type="text" name="usuario.CEP" />
+        @Html.LabelFor(usuario => usuario.Observacoes, "Observação:")
+        @Html.TextAreaFor(usuario => usuario.Observacoes)
+        @Html.ValidationMessageFor(usuario => usuario.Observacoes)
 
-        <label for="observacoes">Observações: </label>
-        <textarea id="observacoes" name="usuario.Observacoes"></textarea>
     </fieldset>
     <div>
-        <input name="usuario.RecebePromocoes" type="checkbox" value="true" />
+        @Html.LabelFor(usuario => usuario.RecebePromocoes, "RecebePromoções")
+        @Html.CheckBoxFor(usuario => usuario.RecebePromocoes)
+        @Html.ValidationMessageFor(usuario => usuario.RecebePromocoes)
+
         Desejo receber informações sobre promoções
     </div>
-
     <input type="submit" value="Cadastrar" class="btn btn-large" />
+}
 
-</form>
+@section Scripts{
+    <script type="text/javascript" src="~/Scripts/jquery.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+}
+
+
