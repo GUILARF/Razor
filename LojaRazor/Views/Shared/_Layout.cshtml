@@ -1,8 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/Style.css" rel="stylesheet" />
+    @Styles.Render("~/bundles/estilos")
 </head>
 <body>
     <div class="navbar navbar-fixed-top">
@@ -36,5 +35,6 @@
     <div class="span9">
         @RenderBody()
     </div>
+    @RenderSection("Scripts", false)
 </body>
 </html>

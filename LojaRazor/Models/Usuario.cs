@@ -11,6 +11,9 @@ namespace LojaRazor.Models
         [Required]
         public String Nome { get; set; }
 
+        [Required]
+        public Sexo Sexo { get; set; }
+
         [Required, EmailAddress]
         public String Email { get; set; }
 
@@ -22,6 +25,8 @@ namespace LojaRazor.Models
 
         [Required]
         public String Endereco { get; set; }
+
+        public Estado Estado { get; set; }
 
         public String Complemento { get; set; }
 
