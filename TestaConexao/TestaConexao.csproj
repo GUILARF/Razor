@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\UsuariosDAO.cs" />
     <Compile Include="Infra\NHibernateHelper.cs" />
     <Compile Include="Models\Estado.cs" />
     <Compile Include="Models\Sexo.cs" />

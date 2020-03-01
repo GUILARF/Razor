@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaRazor", "LojaRazor\Loja
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestaConexao", "TestaConexao\TestaConexao.csproj", "{6931DC70-0E86-4686-9052-EEEB336D6CD6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaWeb", "LojaWeb\LojaWeb.csproj", "{8B69EAF2-E124-4E9B-A3E4-99CFA0B773F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6931DC70-0E86-4686-9052-EEEB336D6CD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6931DC70-0E86-4686-9052-EEEB336D6CD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6931DC70-0E86-4686-9052-EEEB336D6CD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B69EAF2-E124-4E9B-A3E4-99CFA0B773F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B69EAF2-E124-4E9B-A3E4-99CFA0B773F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B69EAF2-E124-4E9B-A3E4-99CFA0B773F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B69EAF2-E124-4E9B-A3E4-99CFA0B773F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
