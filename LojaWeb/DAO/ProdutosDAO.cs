@@ -17,10 +17,8 @@ namespace LojaWeb.DAO
         }
 
         public void Adiciona(Produto produto)
-        {
-            
-            session.Save(produto);
-            
+        {            
+            session.Save(produto);            
             session.Close();
         }
 
