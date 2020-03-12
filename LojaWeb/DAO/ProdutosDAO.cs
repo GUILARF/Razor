@@ -1,5 +1,6 @@
 ﻿using LojaWeb.Entidades;
 using NHibernate;
+using NHibernate.Criterion;
 using NHibernate.Transform;
 using System;
 using System.Collections.Generic;
@@ -119,12 +120,56 @@ namespace LojaWeb.DAO
 
         public IList<Produto> ListaPaginada(int paginaAtual)
         {
-            return new List<Produto>();
+            IQuery query = session.CreateQuery("from Produto p order by p.Nome order by p.Nome");
+            //Limita número de resultados por página para 10
+            int resultadosPorPagina = 10;
+            query.SetMaxResults(resultadosPorPagina);
+            query.SetFirstResult(resultadosPorPagina * (paginaAtual));
+            return query.List<Produto>();
         }
 
         public IList<Produto> BuscaPorPrecoCategoriaENome(double? preco, string nomeCategoria, string nome)
         {
-            return new List<Produto>();
+            ICriteria criteria = session.CreateCriteria<Produto>();
+            if (preco != null)
+            {
+                criteria.Add(Restrictions.Gt("Preco", preco.Value));
+            }
+            if (!string.IsNullOrEmpty(nomeCategoria))
+            {
+                ICriteria criteriaCategoria = criteria.CreateCriteria("Categoria");
+                criteriaCategoria.Add(Restrictions.Eq("Nome", nomeCategoria));
+            }
+            if (!string.IsNullOrEmpty(nome))
+            {
+                criteria.Add(Restrictions.Eq("Nome", nome));
+            }
+            return criteria.List<Produto>();
         }
+
+
+        public IList<Produto> BuscaPorNomePrecoMinimoECategoria(string nome,
+        double? precoMinimo, string nomeCategoria)
+        {
+            ICriteria criteria = session.CreateCriteria<Produto>();
+            if (nome != null)
+            {
+                criteria.Add(Restrictions.Eq("Nome", nome));
+            }
+            if (precoMinimo > 0.0)
+            {
+                criteria.Add(Restrictions.Ge("Preco", precoMinimo));
+            }
+            if (nomeCategoria != null)
+            {
+                ICriteria criteriaCategoria = criteria.CreateCriteria("Categoria");
+                criteriaCategoria.Add(Restrictions.Eq("Nome", nomeCategoria));
+            }
+            return criteria.List<Produto>();
+        }
+
+
+
+       
     }
 }

@@ -43,7 +43,10 @@ namespace LojaWeb.DAO
 
         public IList<Categoria> Lista()
         {
-            IQuery query = session.CreateQuery("from Categoria c join fetch c.Produtos");
+            IQuery query = session.CreateQuery("from Categoria c join fetch c.Produtos order by ");
+            //Paginação é feita com os dois itens abaixo
+            query.SetFirstResult(10);
+            query.SetMaxResults(10);
             return query.List<Categoria>();
         }
 

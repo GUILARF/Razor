@@ -108,7 +108,7 @@ namespace LojaWeb.Controllers
         {
             int paginaAtual = pagina.GetValueOrDefault(1);
             ViewBag.Pagina = paginaAtual;
-            IList<Produto> produtos = new List<Produto>();
+            IList<Produto> produtos = dao.ListaPaginada(paginaAtual);
             return View(produtos);
         }
     }
