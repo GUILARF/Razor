@@ -15,10 +15,17 @@ namespace LojaWeb.Controllers
     {
         //
         // GET: /Categorias/
+        ISession session = NHibernateHelper.AbreSession();
+        private CategoriasDAO dao;
+
+        public CategoriasController(CategoriasDAO dao)
+        {
+            this.dao = dao;
+        }
 
         public ActionResult Index()
         {
-            IList<Categoria> categorias = new List<Categoria>();
+            IList<Categoria> categorias = dao.Lista();
             return View(categorias);
         }
 
@@ -32,21 +39,21 @@ namespace LojaWeb.Controllers
             ISession session = NHibernateHelper.AbreSession();
             CategoriasDAO dao = new CategoriasDAO(session);
             dao.Adiciona(categoria);
-            return RedirectToAction("Visualiza", new { id = categoria.Id });
+            return RedirectToAction("Visualiza", categoria);
         }
 
         public ActionResult Remove(int id)
         {
-     
+
             return RedirectToAction("Index");
         }
 
-        public ActionResult Visualiza(int id)
+        public ActionResult Visualiza(Categoria categoria)
         {
             ISession session = NHibernateHelper.AbreSession();
             CategoriasDAO dao = new CategoriasDAO(session);
-            Categoria categoria = dao.BuscaPorId(id);
-            return View(categoria);
+            Categoria categorias = dao.BuscaPorId(categoria.Id);
+            return View(categorias);
         }
 
         public ActionResult Atualiza(Categoria categoria)
@@ -59,22 +66,22 @@ namespace LojaWeb.Controllers
 
         public ActionResult CategoriasEProdutos()
         {
-            IList<Categoria> categorias = new List<Categoria>();
+            IList<Categoria> categorias = dao.Lista();
             return View(categorias);
         }
 
         public ActionResult BuscaPorNome(string nome)
         {
-            ViewBag.Nome = nome;
-
-            IList<Categoria> categorias = new List<Categoria>();
+            IList<Categoria> categorias = dao.BuscaPorNome(nome);
             return View(categorias);
         }
 
         public ActionResult NumeroDeProdutosPorCategoria()
         {
-            IList<ProdutosPorCategoria> produtosPorCategoria = new List<ProdutosPorCategoria>();
+            IList<ProdutosPorCategoria> produtosPorCategoria = dao.ListaNumeroDeProdutosPorCategoria();
             return View(produtosPorCategoria);
         }
+
+
     }
 }

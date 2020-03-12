@@ -15,11 +15,19 @@ namespace LojaWeb.Controllers
     {
         //
         // GET: /Produtos/
+        private ISession session;
+        private ProdutosDAO dao;
+
+        public ProdutosController(ProdutosDAO dao)
+        {
+            this.dao = dao;
+        }
 
         public ActionResult Index()
         {
-
-            IList<Produto> produtos = new List<Produto>();
+            //ISession session = NHibernateHelper.AbreSession();
+            //ProdutosDAO dao = new ProdutosDAO(session);
+            IList<Produto> produtos = dao.Lista();
             return View(produtos);
         }
 
@@ -30,8 +38,13 @@ namespace LojaWeb.Controllers
 
         public ActionResult Adiciona(Produto produto)
         {
-            ISession session = NHibernateHelper.AbreSession();
-            ProdutosDAO dao = new ProdutosDAO(session);
+            if (produto.Categoria.Id == 0)
+            {
+                produto.Categoria = null;
+            }
+
+            session = NHibernateHelper.AbreSession();
+            dao = new ProdutosDAO(session);
             dao.Adiciona(produto);
             return RedirectToAction("Visualiza", new { id = produto.Id });
         }
@@ -62,14 +75,15 @@ namespace LojaWeb.Controllers
         public ActionResult ProdutosComPrecoMinimo(double? preco)
         {
             ViewBag.Preco = preco;
-            IList<Produto> produtos = new List<Produto>();
+            IList<Produto> produtos = dao.ProdutosComPrecoMaiorDoQue(preco);
             return View(produtos);
+
         }
 
         public ActionResult ProdutosDaCategoria(string nomeCategoria)
         {
             ViewBag.NomeCategoria = nomeCategoria;
-            IList<Produto> produtos = new List<Produto>();
+            IList<Produto> produtos = dao.ProdutosDaCategoria(nomeCategoria);
             return View(produtos);
         }
 
@@ -77,7 +91,7 @@ namespace LojaWeb.Controllers
         {
             ViewBag.Preco = preco;
             ViewBag.NomeCategoria = nomeCategoria;
-            IList<Produto> produtos = new List<Produto>();
+            IList<Produto> produtos = dao.ProdutosDaCategoriaComPrecoMaiorDoQue(preco, nomeCategoria);
             return View(produtos);
         }
 

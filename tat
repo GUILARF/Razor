@@ -1,0 +1,41 @@
+[33mcommit fa3135c56b40b85c98dbe535a5fbb7046f00d049[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;32mhelp[m[33m)[m
+Author: guilarf <guilherme.ferreira@buildit.com.br>
+Date:   Mon Mar 9 18:54:58 2020 -0300
+
+    Atualizando a entidade/controller/dao da categoria
+
+[33mcommit 9ad92f0a67b62c6c13b768cdb3166d0fbe00deb3[m
+Author: guilarf <guilherme.ferreira@buildit.com.br>
+Date:   Sat Feb 29 21:42:43 2020 -0300
+
+    Controle de transacoes no NHIBERNATE - Commit e rollback - OnActionExecuting e OnActionExecuted
+
+[33mcommit b59ee8b6237f23be6ab7ddce9ee16830e29eeac1[m
+Author: guilarf <guilherme.ferreira@buildit.com.br>
+Date:   Sat Feb 29 21:40:20 2020 -0300
+
+    Novo projeto: Injecao de dependencias na Session
+
+[33mcommit bcaa2fbe1813de4ad61102e2c732c75aafaac124[m
+Author: guilarf <guilherme.ferreira@buildit.com.br>
+Date:   Wed Feb 26 11:23:28 2020 -0300
+
+    NHibernate
+
+[33mcommit 8259ba7ac0dcb0a68c1449b842cfbb03107f742e[m
+Author: guilarf <guilherme.ferreira@buildit.com.br>
+Date:   Tue Feb 25 10:29:00 2020 -0300
+
+    Internacionalizacao - ScriptBundle - Ajustes finais
+
+[33mcommit 76489e88ef9c6a8e20fd8665bdd3798c87a7dab2[m
+Author: guilarf <guilherme.ferreira@buildit.com.br>
+Date:   Mon Feb 24 11:40:28 2020 -0300
+
+    Internacionalizacao e Script/Estilos Bundle -- Carregar varios arquivos juntos
+
+[33mcommit d3fab8e0d0b019ac62d40d8e4034120d0a876f6b[m
+Author: guilarf <guilherme.ferreira@buildit.com.br>
+Date:   Sat Feb 22 08:17:23 2020 -0300
+
+    Primeiro Commit

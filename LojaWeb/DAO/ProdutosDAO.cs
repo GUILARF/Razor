@@ -1,5 +1,6 @@
 ﻿using LojaWeb.Entidades;
 using NHibernate;
+using NHibernate.Transform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,24 +42,79 @@ namespace LojaWeb.DAO
             return session.Get<Produto>(id);
         }
 
+        public IList<Produto> Busca()
+        {
+            //string hql = "from Produto p order by p.Nome where p.Preco > ?";
+            //IQuery query = session.CreateQuery(hql);
+            //query.SetParameter(0, 10.0);
+
+            //ou 
+
+            //string hql = "from Produto p order by p.Nome where p.Preco > :minimo";
+            //IQuery query = session.CreateQuery(hql);
+            //query.SetParameter("minimo", 10.0);
+
+
+            // Para listar as categorias de produtos
+            //string hql = "from Produto p where p.Categoria.Nome = :categoria and p.Preco > :minimo"
+
+            //----------------------------------------------------------------------------------------------------
+            //Listar usando função de agrupamento
+            //string hql = "select p.Categoria as Categoria, count(p) as NumeroDeProdutos from Produto p group by p.Categoria";
+            //IQuery q = session.CreateQuery(hql);
+            //IList<Object[]> resultados = q.List<Object[]>();
+            //IList<ProdutosPorCategoria> relatorio = new List<ProdutosPorCategoria>();
+            //foreach (Object[] resultad in resultados)
+            //{
+            //    ProdutosPorCategoria p = new ProdutosPorCategoria();
+            //    p.Categoria = (Categoria)resultad[0];
+            //    p.NumeroDeProdutos = (long)resultad[1];
+            //    relatorio.Add(p);
+            //}
+
+            //OU 
+
+            //string hql = "select p.Categoria as Categoria, count(p) as NumeroDeProdutos from Produto p group by p.Categoria";
+            //IQuery q = session.CreateQuery(hql);
+            //q.SetResultTransformer(Transformers.AliasToBean<ProdutosPorCategoria>());
+            //IList<ProdutosPorCategoria> resultado = q.List<ProdutosPorCategoria>();
+            //----------------------------------------------------------------------------------------------------
+
+
+            string hql = "from Produto p order by p.Nome";
+            IQuery query = session.CreateQuery(hql);
+            IList<Produto> produtos = query.List<Produto>();
+            return produtos;
+        }
+
+
         public IList<Produto> Lista()
         {
-            return new List<Produto>();
+            IQuery query = session.CreateQuery("from Produto p order by p.Nome");
+            return query.List<Produto>();            
         }
 
         public IList<Produto> ProdutosComPrecoMaiorDoQue(double? preco)
         {
-            return new List<Produto>();
+            IQuery query = session.CreateQuery("from Produtos p where p.Preco > :valor");
+            query.SetParameter("valor", preco.GetValueOrDefault(0.0));
+            return query.List<Produto>();
+            
         }
 
         public IList<Produto> ProdutosDaCategoria(string nomeCategoria)
         {
-            return new List<Produto>();
+            IQuery query = session.CreateQuery("from Produtos p where p.Categoria.Nome = :nome");
+            query.SetParameter("nome", nomeCategoria);
+            return query.List<Produto>();
         }
 
         public IList<Produto> ProdutosDaCategoriaComPrecoMaiorDoQue(double? preco, string nomeCategoria)
         {
-            return new List<Produto>();
+            IQuery query = session.CreateQuery("from Produtos p where p.Categoria.Nome = :nome and p.Preco > :valor");
+            query.SetParameter("nome", nomeCategoria);
+            query.SetParameter("valor", preco.GetValueOrDefault(0.0));
+            return query.List<Produto>();
         }
 
         public IList<Produto> ListaPaginada(int paginaAtual)

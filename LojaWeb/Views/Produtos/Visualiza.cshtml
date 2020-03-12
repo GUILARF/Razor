@@ -14,13 +14,13 @@
         Preco:
         <input type="text" name="produto.Preco" value="@Model.Preco" />
     </label>
-    @*<label>
+    <label>
         Categoria:
         @if(Model.Categoria != null) {
             <input type="text" name="produto.Categoria.Id" value="@Model.Categoria.Id" />
         } else {
             <input type="text" name="produto.Categoria.Id" />   
         }
-    </label>*@
+    </label>
     <input type="submit" value="Alterar" />
 </form>

@@ -5,11 +5,14 @@ namespace LojaWeb.App_Start
 {
     using System;
     using System.Web;
+    using System.Web.Mvc;
+    using LojaWeb.Filters;
     using LojaWeb.Infra;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using NHibernate;
     using Ninject;
     using Ninject.Web.Common;
+    using Ninject.Web.Mvc.FilterBindingSyntax;
 
     public static class NinjectWebCommon
     {
@@ -53,8 +56,10 @@ namespace LojaWeb.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-
+            
             kernel.Bind<ISession>().ToMethod(x => NHibernateHelper.AbreSession()).InRequestScope();
+            int ordemExecucao = 1;
+            kernel.BindFilter<TransactionFilter>(FilterScope.Global, ordemExecucao);
         }
 
 

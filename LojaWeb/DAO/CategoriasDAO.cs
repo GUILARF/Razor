@@ -1,17 +1,19 @@
 ﻿using LojaWeb.Entidades;
 using LojaWeb.Models;
 using NHibernate;
+using NHibernate.Transform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace LojaWeb.DAO
 {
-    public class CategoriasDAO
+    public class CategoriasDAO 
     {
         private ISession session;
-
+      
         public CategoriasDAO(ISession session)
         {
             this.session = session;
@@ -41,18 +43,27 @@ namespace LojaWeb.DAO
 
         public IList<Categoria> Lista()
         {
-            return new List<Categoria>();
+            IQuery query = session.CreateQuery("from Categoria c join fetch c.Produtos");
+            return query.List<Categoria>();
         }
 
         public IList<Categoria> BuscaPorNome(string nome)
         {
-            return new List<Categoria>();
+            //return session.Get;
+            IQuery query = session.CreateQuery("from Categoria c where c.Nome like '%:nomecategoria%'");
+            query.SetParameter("nomecategoria", nome);
+            return query.List<Categoria>();
         }
 
         public IList<ProdutosPorCategoria> ListaNumeroDeProdutosPorCategoria()
         {
-            return new List<ProdutosPorCategoria>();
+            IQuery query = session.CreateQuery("select c.Nome, count(*) from Categoria c group by c.Nome");
+            query.SetResultTransformer(Transformers.AliasToBean<ProdutosPorCategoria>());
+            return query.List<ProdutosPorCategoria>();
         }
+
+
+
     }
 
 }

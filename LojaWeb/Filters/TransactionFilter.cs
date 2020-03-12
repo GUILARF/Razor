@@ -30,5 +30,15 @@ namespace LojaWeb.Filters
             }
             session.Close();
         }
+
+        public override void OnResultExecuted(ResultExecutedContext filterContext)
+        {
+            if (filterContext.Exception != null)
+            {
+                session.Transaction.Rollback();
+                session.Close();
+            }
+        }
+        
     }
 }
