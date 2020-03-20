@@ -130,7 +130,12 @@ namespace LojaWeb.DAO
 
         public IList<Produto> BuscaPorPrecoCategoriaENome(double? preco, string nomeCategoria, string nome)
         {
+            //Criteria é a forma de usar queries dinamicas.
             ICriteria criteria = session.CreateCriteria<Produto>();
+            //Também da pra por em cache o resutado de uma criteria
+            criteria.SetCacheable(true);
+
+
             if (preco != null)
             {
                 criteria.Add(Restrictions.Gt("Preco", preco.Value));
@@ -138,6 +143,7 @@ namespace LojaWeb.DAO
             if (!string.IsNullOrEmpty(nomeCategoria))
             {
                 ICriteria criteriaCategoria = criteria.CreateCriteria("Categoria");
+                
                 criteriaCategoria.Add(Restrictions.Eq("Nome", nomeCategoria));
             }
             if (!string.IsNullOrEmpty(nome))

@@ -1,11 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="LojaWeb" namespace="LojaWeb.Entidades">
   <class name="Categoria">
+    
+    <!--read-only: A entidade só pode ser lida, qualquer modificação gera uma exceção no código. Essa estratégia pode ser utilizada quando temos entidades que representam constantes no sistema
+        nonstrict-read-write: A entidade pode ser lida e modificada, porém, em uma situação de alta concorrência, o NHibernate não garante que o valor armazenado no cache é a última versão da entidade. Essa estratégia pode ser utilizada em situações em que temos baixa concorrência ou quando a entidade não for modificada com muita frequência
+        read-write: Essa é uma estratégia mais abrangente e permite que a entidade possa ser modificada com mais frequencia. Garante que os dados do cache são os mesmos do banco de dados.-->
+    <cache usage="nonstrict-read-write"/>
     <id name="Id">
       <generator class="identity"/>
     </id>
     <property name="Nome"/>
     <bag name="Produtos" inverse="true" fetch="join" batch-size="10">
+      
+      <!--para guardar no cache a entidade produtos é preciso por cache aqui na bag tb-->
+      <cache usage="nonstrict-read-write"/>
       <key column="CategoriaId" />
       <one-to-many class="Produto" />
     </bag>

@@ -10,10 +10,10 @@ using System.Web.Mvc;
 
 namespace LojaWeb.DAO
 {
-    public class CategoriasDAO 
+    public class CategoriasDAO
     {
         private ISession session;
-      
+
         public CategoriasDAO(ISession session)
         {
             this.session = session;
@@ -45,6 +45,15 @@ namespace LojaWeb.DAO
         {
             IQuery query = session.CreateQuery("from Categoria c join fetch c.Produtos order by ");
             //Paginação é feita com os dois itens abaixo
+
+
+
+            //SetCacheable define que a query vai pro cache por ser muito utilizada
+            /*Quando pedimos para o NHibernate cachear o resultado de uma query que retorna uma coleção de entidades. 
+             * Ele, assim como no cache de coleções, armazena apenas os ids das entidades devolvidas e, para evitarmos 
+             * o problema de desempenho, precisamos adicionar a entidade no cache de segundo nível.
+             */
+            query.SetCacheable(true);
             query.SetFirstResult(10);
             query.SetMaxResults(10);
             return query.List<Categoria>();

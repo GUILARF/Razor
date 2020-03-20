@@ -45,7 +45,9 @@ namespace LojaWeb.DAO
 
         public IList<Usuario> Lista()
         {
-            return new List<Usuario>();
+            IQuery query = session.CreateQuery("from Usuario");
+            query.SetCacheable(true);
+            return query.List<Usuario>();
         }
     }
 }

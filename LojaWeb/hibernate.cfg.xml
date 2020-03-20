@@ -16,7 +16,26 @@
     </property>
     <property name="hbm2ddl.auto">update</property>
     <property name="show_sql">true</property>
+    
+    <!--Mostrar sql formatado para visualizar, caso vc queira-->
     <property name="format_sql">true</property>
+    
+    <!--Cache do SysCache é usado para guardar em cache as queries muito utilizadas-->
+    <!--Código para usar nivel de cache na ISectionFactory, que guarda mesmo entre sessoes-->
+    <property name="cache.use_second_level_cache">true</property>
+  
+     <!-- o código abaixo é para usar o cache do nuget Syscache, pesquisar:NHibernate.Caches.SysCache na loja de nugets -->
+    <property name="cache.provider_class">
+    NHibernate.Caches.SysCache.SysCacheProvider, NHibernate.Caches.SysCache
+    </property>
+    
+    <!-- o código abaixo é necessário para habilitar o cache de queries escolhidas
+         ainda será preciso definir em cada query NHB. a propriedade SetCacheable(true)
+         
+         ex:IQuery query = session.CreateQuery("from Categoria"); 
+            query.SetCacheable(true);  -->
+    <property name="cache.use_query_cache" >true</property>
+  
   </session-factory>
   
 </hibernate-configuration>
