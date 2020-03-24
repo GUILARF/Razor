@@ -16,18 +16,18 @@ namespace LojaWeb.Controllers
         //
         // GET: /Produtos/
         private ISession session;
-        private ProdutosDAO dao;
+        private ProdutosDAO produtosdao;
 
         public ProdutosController(ProdutosDAO dao)
         {
-            this.dao = dao;
+            this.produtosdao = dao;
         }
 
         public ActionResult Index()
         {
             //ISession session = NHibernateHelper.AbreSession();
             //ProdutosDAO dao = new ProdutosDAO(session);
-            IList<Produto> produtos = dao.Lista();
+            IList<Produto> produtos = produtosdao.Lista();
             return View(produtos);
         }
 
@@ -44,22 +44,24 @@ namespace LojaWeb.Controllers
             }
 
             session = NHibernateHelper.AbreSession();
-            dao = new ProdutosDAO(session);
-            dao.Adiciona(produto);
+            produtosdao = new ProdutosDAO(session);
+            produtosdao.Adiciona(produto);
             return RedirectToAction("Visualiza", new { id = produto.Id });
         }
 
         public ActionResult Remove(int id)
         {
+            produtosdao.Remove(id);
             return RedirectToAction("Index");
         }
 
         public ActionResult Visualiza(int id)
         {
-            ISession session = NHibernateHelper.AbreSession();
-            ProdutosDAO dao = new ProdutosDAO(session);
-            Produto p = dao.BuscaPorId(id);
-            session.Close();
+            //ISession session = NHibernateHelper.AbreSession();
+            //ProdutosDAO dao = new ProdutosDAO(session);
+            //Produto p = dao.BuscaPorId(id);
+            Produto p = produtosdao.BuscaPorId(id);            
+            //session.Close();
             return View(p);
         }
 
@@ -75,7 +77,7 @@ namespace LojaWeb.Controllers
         public ActionResult ProdutosComPrecoMinimo(double? preco)
         {
             ViewBag.Preco = preco;
-            IList<Produto> produtos = dao.ProdutosComPrecoMaiorDoQue(preco);
+            IList<Produto> produtos = produtosdao.ProdutosComPrecoMaiorDoQue(preco);
             return View(produtos);
 
         }
@@ -83,7 +85,7 @@ namespace LojaWeb.Controllers
         public ActionResult ProdutosDaCategoria(string nomeCategoria)
         {
             ViewBag.NomeCategoria = nomeCategoria;
-            IList<Produto> produtos = dao.ProdutosDaCategoria(nomeCategoria);
+            IList<Produto> produtos = produtosdao.ProdutosDaCategoria(nomeCategoria);
             return View(produtos);
         }
 
@@ -91,7 +93,7 @@ namespace LojaWeb.Controllers
         {
             ViewBag.Preco = preco;
             ViewBag.NomeCategoria = nomeCategoria;
-            IList<Produto> produtos = dao.ProdutosDaCategoriaComPrecoMaiorDoQue(preco, nomeCategoria);
+            IList<Produto> produtos = produtosdao.ProdutosDaCategoriaComPrecoMaiorDoQue(preco, nomeCategoria);
             return View(produtos);
         }
 
@@ -108,7 +110,7 @@ namespace LojaWeb.Controllers
         {
             int paginaAtual = pagina.GetValueOrDefault(1);
             ViewBag.Pagina = paginaAtual;
-            IList<Produto> produtos = dao.ListaPaginada(paginaAtual);
+            IList<Produto> produtos = produtosdao.ListaPaginada(paginaAtual);
             return View(produtos);
         }
     }

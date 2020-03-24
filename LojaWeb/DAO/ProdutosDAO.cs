@@ -24,9 +24,9 @@ namespace LojaWeb.DAO
             session.Close();
         }
 
-        public void Remove(Produto produto)
+        public void Remove(int id)
         {
-           
+            Produto produto = BuscaPorId(id);
             session.Delete(produto);
            
         }
@@ -97,7 +97,7 @@ namespace LojaWeb.DAO
 
         public IList<Produto> ProdutosComPrecoMaiorDoQue(double? preco)
         {
-            IQuery query = session.CreateQuery("from Produtos p where p.Preco > :valor");
+            IQuery query = session.CreateQuery("from Produto p where p.Preco > :valor");
             query.SetParameter("valor", preco.GetValueOrDefault(0.0));
             return query.List<Produto>();
             

@@ -1,9 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="LojaWeb" namespace="LojaWeb.Entidades">
-  <class name="Usuario">
+  <!--Abstract = true é para o NHB. não gerar uma tabela no banco, já que a classe é abstrata e não pode ser
+      instanciada -->
+  <class name="Usuario" abstract="true">
     <id name="Id">
       <generator class="identity"/>
     </id>
+    
+    <!--Discriminator é quando  o campo pode ser de tipos diferentes, quem vao estar em  uma mesma tabela no banco.
+        Esses campos (CPF e CNPJ) vem de duas classes diferentes, mas vão estar em um mesmo campo na tabela (tipo) -->
+    <discriminator column="Tipo" type="System.String" />
+    <!--No  caso, o nome pode ser uma PF ou PJ w pode vir das tabelas PessoaFisica ou PessoaJuridica-->
     <property name="Nome"/>
+
+    <subclass name="PessoaFisica">
+      <property name="CPF"/>
+    </subclass>
+    <subclass name="PessoaJuridica">
+      <property name="CNPJ"/>
+    </subclass>
+
+    <!-- Se precisasse usar duas tabelas separadas e ligá-las com a tb de usuário , usaria o código abaixo
+          <joined-subclass name="PessoaFisica">
+             o NHibernate precisa colocar uma chave estrangeira para a tabela da classe pai, informamos o nome dessa chave através do atributo column da tag key
+            <key column="UsuarioId"/>
+            <property name="CPF"/>
+          </joined-subclass>
+          <joined-subclass name="PessoaJuridica">
+            <key column="UsuarioId"/>
+            <property name="CNPJ"/>
+          </joined-subclass>
+      -->
+
+
   </class>
 </hibernate-mapping>

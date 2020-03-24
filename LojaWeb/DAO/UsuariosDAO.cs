@@ -16,38 +16,33 @@ namespace LojaWeb.DAO
             this.session = session;
         }
 
-        public void Adiciona(Usuario usuario)
+        public void Adiciona(PessoaFisica usuario)
         {
-            ITransaction transacao = session.BeginTransaction();
             session.Save(usuario);
-            transacao.Commit();
-
         }
 
-        public void Remove(Usuario usuario)
+        public void Remove(PessoaFisica usuario)
         {
             ITransaction transacao = session.BeginTransaction();
             session.Delete(usuario);
             transacao.Commit();
         }
 
-        public void Atualiza(Usuario usuario)
+        public void Atualiza(PessoaFisica usuario)
         {
-            ITransaction transacao = session.BeginTransaction();
-            session.Save(usuario);
-            transacao.Commit();
+            session.Merge(usuario);
         }
 
         public Usuario BuscaPorId(int id)
         {
-            return session.Get<Usuario>(id);
+            return session.Get<PessoaFisica>(id);
         }
 
-        public IList<Usuario> Lista()
+        public IList<PessoaFisica> Lista()
         {
             IQuery query = session.CreateQuery("from Usuario");
             query.SetCacheable(true);
-            return query.List<Usuario>();
+            return query.List<PessoaFisica>();
         }
     }
 }

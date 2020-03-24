@@ -43,9 +43,10 @@ namespace LojaWeb.DAO
 
         public IList<Categoria> Lista()
         {
-            IQuery query = session.CreateQuery("from Categoria c join fetch c.Produtos order by ");
+            IQuery query = session.CreateQuery("from Categoria c join fetch  c.Produtos");
             //Paginação é feita com os dois itens abaixo
-
+            //IQuery query = session.CreateSQLQuery("select p.Id as Id, p.Nome as NomeProduto, c.Nome as NomeCategoria, p.Preco as Preco from categoria c join produto p on p.CategoriaId = c.id")
+            //   .SetResultTransformer(Transformers.AliasToBean<ProdutoCategoria>());
 
 
             //SetCacheable define que a query vai pro cache por ser muito utilizada
@@ -53,9 +54,9 @@ namespace LojaWeb.DAO
              * Ele, assim como no cache de coleções, armazena apenas os ids das entidades devolvidas e, para evitarmos 
              * o problema de desempenho, precisamos adicionar a entidade no cache de segundo nível.
              */
-            query.SetCacheable(true);
-            query.SetFirstResult(10);
-            query.SetMaxResults(10);
+            //query.SetCacheable(true);
+            //query.SetFirstResult(10);
+            //query.SetMaxResults(10);
             return query.List<Categoria>();
         }
 

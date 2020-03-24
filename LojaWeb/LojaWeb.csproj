@@ -203,6 +203,8 @@
     <Compile Include="DAO\UsuariosDAO.cs" />
     <Compile Include="DAO\VendasDAO.cs" />
     <Compile Include="Entidades\Categoria.cs" />
+    <Compile Include="Entidades\PessoaJuridica.cs" />
+    <Compile Include="Entidades\PessoaFisica.cs" />
     <Compile Include="Entidades\Produto.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\Venda.cs" />
@@ -214,6 +216,7 @@
     <Compile Include="Infra\NHibernateHelper.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Carrinho.cs" />
+    <Compile Include="Models\ProdutoCategoria.cs" />
     <Compile Include="Models\ProdutosPorCategoria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -275,13 +278,16 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
-    <EmbeddedResource Include="Mapeamentos\Usuario.hbm.xml" />
+    <EmbeddedResource Include="Mapeamentos\Usuario.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Mapeamentos\Categoria.hbm.xml" />
     <EmbeddedResource Include="Mapeamentos\Produto.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <EmbeddedResource Include="Mapeamentos\Venda.hbm.xml" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

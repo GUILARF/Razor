@@ -1,6 +1,7 @@
 ﻿using LojaWeb.DAO;
 using LojaWeb.Entidades;
 using LojaWeb.Models;
+using NHibernate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,35 +12,49 @@ namespace LojaWeb.Controllers
 {
     public class VendasController : Controller
     {
+        ISession session;
+        VendasDAO vendasDao;
+        UsuariosDAO usuariosDao;
+        ProdutosDAO produtosDao;
+        
+
+        public VendasController(VendasDAO vendasDao, UsuariosDAO usuariosDao, ProdutosDAO produtosDao)
+        {
+            this.vendasDao = vendasDao;
+            this.usuariosDao = usuariosDao;
+            this.produtosDao = produtosDao;
+        }
+        
         public ActionResult Index()
         {
-            IList<Venda> vendas = new List<Venda>();
+            IList<Venda> vendas = vendasDao.Lista();
             return View(vendas);
         }
         public ActionResult ListaProdutos()
         {
-            IList<Produto> produtos = new List<Produto>();
+            IList<Produto> produtos = produtosDao.Lista();
             ViewBag.ProdutosNoCarrinho = this.Carrinho.Produtos.Count;
             return View(produtos);
         }
         public ActionResult AdicionaProduto(int produtoId)
         {
-            Produto produto = new Produto();
+            Produto produto = produtosDao.BuscaPorId(produtoId);
             this.Carrinho.Adiciona(produto);
             return RedirectToAction("ListaProdutos");
         }
         public ActionResult FechaPedido()
         {
             IList<Produto> produtos = this.Carrinho.Produtos;
-            IList<Usuario> usuarios = new List<Usuario>();
+            IList<PessoaFisica> usuarios = usuariosDao.Lista() ;
             ViewBag.Usuarios = usuarios;
             return View(produtos);
         }
         public ActionResult CompletaPedido(int usuarioId)
         {
-            Usuario usuario = new Usuario();
+            Usuario usuario = usuariosDao.BuscaPorId(usuarioId);
             Venda venda = this.Carrinho.CriaVenda(usuario);
             // grava venda
+            vendasDao.GravaVenda(venda);
             this.Carrinho = new Carrinho();
             return RedirectToAction("Index");
         }
@@ -67,5 +82,7 @@ namespace LojaWeb.Controllers
                 Session["Carrinho"] = value;
             }
         }
+
+        
     }
 }
